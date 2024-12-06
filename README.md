@@ -1,55 +1,59 @@
 # Dataset Analysis Report
 
 ## Summary Statistics
-|        |   book_id |   goodreads_book_id |     best_book_id |         work_id |   books_count |           isbn |         isbn13 | authors      |   original_publication_year | original_title   | title          | language_code   |   average_rating |    ratings_count |   work_ratings_count |   work_text_reviews_count |   ratings_1 |   ratings_2 |   ratings_3 |      ratings_4 |       ratings_5 | image_url                                                                                | small_image_url                                                                        |
-|:-------|----------:|--------------------:|-----------------:|----------------:|--------------:|---------------:|---------------:|:-------------|----------------------------:|:-----------------|:---------------|:----------------|-----------------:|-----------------:|---------------------:|--------------------------:|------------:|------------:|------------:|---------------:|----------------:|:-----------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------|
-| count  |  10000    |     10000           |  10000           | 10000           |    10000      | 9300           | 9415           | 10000        |                    9979     | 9415             | 10000          | 8916            |     10000        |  10000           |      10000           |                  10000    |    10000    |    10000    |     10000   | 10000          | 10000           | 10000                                                                                    | 10000                                                                                  |
-| unique |    nan    |       nan           |    nan           |   nan           |      nan      | 9300           |  nan           | 4664         |                     nan     | 9274             | 9964           | 25              |       nan        |    nan           |        nan           |                    nan    |      nan    |      nan    |       nan   |   nan          |   nan           | 6669                                                                                     | 6669                                                                                   |
-| top    |    nan    |       nan           |    nan           |   nan           |      nan      |    4.39023e+08 |  nan           | Stephen King |                     nan     |                  | Selected Poems | eng             |       nan        |    nan           |        nan           |                    nan    |      nan    |      nan    |       nan   |   nan          |   nan           | https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png | https://s.gr-assets.com/assets/nophoto/book/50x75-a91bf249278a81aabab721ef782c4a74.png |
-| freq   |    nan    |       nan           |    nan           |   nan           |      nan      |    1           |  nan           | 60           |                     nan     | 5                | 4              | 6341            |       nan        |    nan           |        nan           |                    nan    |      nan    |      nan    |       nan   |   nan          |   nan           | 3332                                                                                     | 3332                                                                                   |
-| mean   |   5000.5  |         5.2647e+06  |      5.47121e+06 |     8.64618e+06 |       75.7127 |  nan           |    9.75504e+12 | nan          |                    1981.99  | nan              | nan            | nan             |         4.00219  |  54001.2         |      59687.3         |                   2919.96 |     1345.04 |     3110.89 |     11475.9 | 19965.7        | 23789.8         | nan                                                                                      | nan                                                                                    |
-| std    |   2886.9  |         7.57546e+06 |      7.82733e+06 |     1.17511e+07 |      170.471  |  nan           |    4.42862e+11 | nan          |                     152.577 | nan              | nan            | nan             |         0.254427 | 157370           |     167804           |                   6124.38 |     6635.63 |     9717.12 |     28546.4 | 51447.4        | 79768.9         | nan                                                                                      | nan                                                                                    |
-| min    |      1    |         1           |      1           |    87           |        1      |  nan           |    1.9517e+08  | nan          |                   -1750     | nan              | nan            | nan             |         2.47     |   2716           |       5510           |                      3    |       11    |       30    |       323   |   750          |   754           | nan                                                                                      | nan                                                                                    |
-| 25%    |   2500.75 |     46275.8         |  47911.8         |     1.00884e+06 |       23      |  nan           |    9.78032e+12 | nan          |                    1990     | nan              | nan            | nan             |         3.85     |  13568.8         |      15438.8         |                    694    |      196    |      656    |      3112   |  5405.75       |  5334           | nan                                                                                      | nan                                                                                    |
-| 50%    |   5000.5  |    394966           | 425124           |     2.71952e+06 |       40      |  nan           |    9.78045e+12 | nan          |                    2004     | nan              | nan            | nan             |         4.02     |  21155.5         |      23832.5         |                   1402    |      391    |     1163    |      4894   |  8269.5        |  8836           | nan                                                                                      | nan                                                                                    |
-| 75%    |   7500.25 |         9.38223e+06 |      9.63611e+06 |     1.45177e+07 |       67      |  nan           |    9.78083e+12 | nan          |                    2011     | nan              | nan            | nan             |         4.18     |  41053.5         |      45915           |                   2744.25 |      885    |     2353.25 |      9287   | 16023.5        | 17304.5         | nan                                                                                      | nan                                                                                    |
-| max    |  10000    |         3.32886e+07 |      3.55342e+07 |     5.63996e+07 |     3455      |  nan           |    9.79001e+12 | nan          |                    2017     | nan              | nan            | nan             |         4.82     |      4.78065e+06 |          4.94236e+06 |                 155254    |   456191    |   436802    |    793319   |     1.4813e+06 |     3.01154e+06 | nan                                                                                      | nan                                                                                    |
+|        | Country name   |       year |   Life Ladder |   Log GDP per capita |   Social support |   Healthy life expectancy at birth |   Freedom to make life choices |     Generosity |   Perceptions of corruption |   Positive affect |   Negative affect |
+|:-------|:---------------|-----------:|--------------:|---------------------:|-----------------:|-----------------------------------:|-------------------------------:|---------------:|----------------------------:|------------------:|------------------:|
+| count  | 2363           | 2363       |    2363       |           2335       |      2350        |                         2300       |                    2327        | 2282           |                 2238        |       2339        |      2347         |
+| unique | 165            |  nan       |     nan       |            nan       |       nan        |                          nan       |                     nan        |  nan           |                  nan        |        nan        |       nan         |
+| top    | Lebanon        |  nan       |     nan       |            nan       |       nan        |                          nan       |                     nan        |  nan           |                  nan        |        nan        |       nan         |
+| freq   | 18             |  nan       |     nan       |            nan       |       nan        |                          nan       |                     nan        |  nan           |                  nan        |        nan        |       nan         |
+| mean   | nan            | 2014.76    |       5.48357 |              9.39967 |         0.809369 |                           63.4018  |                       0.750282 |    9.77213e-05 |                    0.743971 |          0.651882 |         0.273151  |
+| std    | nan            |    5.05944 |       1.12552 |              1.15207 |         0.121212 |                            6.84264 |                       0.139357 |    0.161388    |                    0.184865 |          0.10624  |         0.0871311 |
+| min    | nan            | 2005       |       1.281   |              5.527   |         0.228    |                            6.72    |                       0.228    |   -0.34        |                    0.035    |          0.179    |         0.083     |
+| 25%    | nan            | 2011       |       4.647   |              8.5065  |         0.744    |                           59.195   |                       0.661    |   -0.112       |                    0.687    |          0.572    |         0.209     |
+| 50%    | nan            | 2015       |       5.449   |              9.503   |         0.8345   |                           65.1     |                       0.771    |   -0.022       |                    0.7985   |          0.663    |         0.262     |
+| 75%    | nan            | 2019       |       6.3235  |             10.3925  |         0.904    |                           68.5525  |                       0.862    |    0.09375     |                    0.86775  |          0.737    |         0.326     |
+| max    | nan            | 2023       |       8.019   |             11.676   |         0.987    |                           74.6     |                       0.985    |    0.7         |                    0.983    |          0.884    |         0.705     |
 
 ## Insights from LLM
-Based on the provided dataset, here are several key insights, patterns, and observations:
+Certainly! Here are some insights and observations from the provided dataset:
 
-### 1. **Rating Distribution:**
-   - The average ratings vary, with the highest being **4.54** for "桜蘭高校ホスト部 15" and the lowest being **2.67** for "The Almost Moon."
-   - Many books have average ratings above **4.0**, indicating a general preference for highly-rated books among readers.
+### General Observations:
+1. **Life Ladder (Well-being Score)**:
+   - Countries like **Iceland (7.476)** and **New Zealand (7.28)** exhibit higher life ladder scores, indicating better perceived well-being among their populations. In contrast, **Mali (3.975)** and **Bangladesh (3.408)** show notably lower scores.
+   - There is a noticeable difference between high-income countries and low-income countries in terms of life ladder scores, with wealthier nations consistently reporting higher levels of well-being.
 
-### 2. **Ratings Count:**
-   - The **ratings_count** variable shows varied popularity. For instance, "Cold Mountain" has a significantly high ratings count of **185,979**, suggesting it's a well-read and popular title.
-   - In contrast, the book "Mخطوطة بن إسحاق: مدينة الموتى" has only **8,103** ratings, indicating lower visibility or popularity.
+2. **Economic Indicators (Log GDP per capita)**:
+   - Higher life ladder scores correlate with higher GDP per capita. For instance, **Iceland** and **Germany** possess high log GDP per capita (10.927 and 10.758 respectively), reflecting the economic prosperity associated with higher well-being.
+   - Countries like **Niger (6.932)** and **Mali (7.591)**, despite their low life ladder scores, still have relatively lower GDP levels than the wealthier counterparts.
 
-### 3. **Author Trends:**
-   - Authors like **James Rollins** appear multiple times in the dataset with various books (e.g., "The Doomsday Key" and "Sandstorm"), suggesting he has a strong foothold in the market.
-   - Collaborations between authors (e.g., "Gene Luen Yang, Bryan Konietzko, Michael Dante DiMartino, Gurihiru") indicate the trend of joint works, potentially blending genres or fan bases.
+3. **Social Support**:
+   - **Iceland (0.967)** and **New Zealand (0.958)** have high social support ratings, highlighting the importance of community and social networks in fostering individual well-being.
+   - Many countries suffering from low life ladder scores, such as **Niger** and **Chad**, also report lower levels of social support, which may contribute to their overall dissatisfaction and lower psychological well-being.
 
-### 4. **Publication Year Analysis:**
-   - The dataset contains books from a wide range of years (from **1848** to **2016**), indicating it captures both classic literature and contemporary writing.
-   - Older works, such as **Cyrano de Bergerac** (1897), maintain relevance, as seen in their ratings.
+4. **Health Indicators (Healthy Life Expectancy)**:
+   - Countries with higher healthy life expectancy, such as **Iceland (71.95)** and **New Zealand (69.86)**, tend to have higher life ladder scores. In contrast, countries like **Congo (Brazzaville) (54.9)** exhibit lower life expectancy and life ladder scores.
+   - This suggests a potential link between health outcomes and self-reported well-being.
 
-### 5. **Language Representation:**
-   - The dataset predominantly features English-language books, though it includes novels in other languages (e.g., Arabic). This might suggest a focus on a primarily English-speaking audience, which could limit the dataset's diversity.
+5. **Freedom to Make Life Choices**:
+   - Countries such as **Iceland (0.939)** and **Albania (0.824)** report significant freedoms regarding life choices, which could be influencing their higher life ladder scores.
+   - Conversely, countries with lower indices, such as **Congo (Brazzaville) (0.85)** and **Tanzania (0.597)**, may face restrictions that could affect perceived well-being.
 
-### 6. **Genres and Themes:**
-   - Various genres are represented, from literary fiction to graphic novels. For example, "Avatar: The Last Airbender" indicates a trend towards adapted works from other media.
-   - The presence of contemporary themes, such as “Chanakya's Chant,” might reflect current interests among readers, suggesting topics of cultural relevance or historical fascination.
+### Patterns and Correlations:
+1. **Positive vs. Negative Affect**:
+   - Positive affect scores tend to be higher in countries with higher life ladder scores, indicating that happier societies are more prevalent in wealthier nations.
+   - Negative affect is less prevalent in high-ranked countries, further supporting the idea that economic prosperity and social welfare contribute to overall happiness.
 
-### 7. **Image Representation:**
-   - The dataset includes URLs for both large and small book images, suggesting an emphasis on visual appeal which may influence reader interest and engagement online.
+2. **Generosity and Corruption**:
+   - Countries exhibiting higher generosity scores often correspond with lower perceptions of corruption. For instance, **Iceland (0.24)** shows a commitment to generosity and a strong societal perception of integrity.
+   - On the contrary, nations like **Bangladesh (0.865)** show a generous impulse, yet face high levels of corruption, which may create barriers to true societal well-being.
 
-### 8. **Ratings Breakdown:**
-   - The ratings breakdown (ratings_1 to ratings_5) reveals a pattern where most higher-rated books consist of a higher count of **5-star ratings**, indicating positive reception.
-   - Books with **lower average ratings** show a more balanced spread across the ratings spectrum, indicating more polarized opinions among readers.
+3. **Outliers**:
+   - **Malaysia (2007)** reports a high life ladder score (6.239) with relatively lower GDP (9.867) compared to similarly ranked nations. This could indicate a unique social or cultural context affecting citizen well-being independently of economic factors.
+   - The **State of Palestine** has varied scores across years, indicating significant instability or changes impacting social metrics.
 
 ### Conclusion:
-Overall, the dataset reflects diverse readership preferences and patterns, with significant popularity associated with high ratings and an inclination towards newer works. Notable authors show specific trends in productivity, while the range of publication years suggests a blend of classic and contemporary literature appealing to various audience segments. Further analysis could delve into correlations between genre, author frequency, and ratings to provide deeper insights.
+The dataset reveals strong interdependencies between economic status, social factors, and perceived well-being across various countries. High life ladder scores generally correlate with robust economic, health, and social support indicators. Addressing societal inequalities, promoting health care access, and establishing systems for social support may enhance the well-being of populations, particularly in lower-income nations.
 
 ## Visualizations
 ### correlation_heatmap.png

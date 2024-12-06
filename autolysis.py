@@ -2,12 +2,12 @@ import os
 import sys
 import argparse
 import pandas as pd  # type: ignore
-import matplotlib.pyplot as plt
-import seaborn as sns
-import requests
+import matplotlib.pyplot as plt  # type: ignore
+import seaborn as sns  # type: ignore
+import requests  # type: ignore
 import json
 from subprocess import run
-from tabulate import tabulate
+from tabulate import tabulate  # type: ignore
 
 # Constants
 GPT4_MINI_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
@@ -133,11 +133,16 @@ def main():
     # Ensure output directory exists
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    # Load dataset
+    # Load dataset with encoding handling
     if not os.path.exists(args.csv_file):
         raise FileNotFoundError(f"{args.csv_file} not found.")
-    data = pd.read_csv(args.csv_file)
-
+    
+    try:
+        data = pd.read_csv(args.csv_file, encoding="utf-8")
+    except UnicodeDecodeError:
+        print("UTF-8 decoding failed. Trying 'ISO-8859-1' encoding.")
+        data = pd.read_csv(args.csv_file, encoding="ISO-8859-1")
+    
     # Perform analysis
     summary, charts = perform_analysis(data, OUTPUT_DIR)
 
