@@ -6,12 +6,11 @@ import matplotlib.pyplot as plt  # type: ignore
 import seaborn as sns  # type: ignore
 import requests  # type: ignore
 import json
-from subprocess import run
 from tabulate import tabulate  # type: ignore
 
 # Constants
 GPT4_MINI_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
-API_KEY = "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjIzZjIwMDE0NzVAZHMuc3R1ZHkuaWl0bS5hYy5pbiJ9.VqMP1WNW5f7OqHkwrDTkabWnLwGIXcurXQtqrCAs_6I"  # Replace with your API key
+API_KEY = os.environ["AIPROXY_TOKEN"] # Replace with your API key
 OUTPUT_DIR = "."  # Current directory
 SAMPLE_SIZE = 50  # Number of rows to send to LLM
 IMAGE_SIZE = (6, 6)  # For low-detail images
@@ -46,16 +45,19 @@ def send_request_to_llm(prompt):
 
 def get_sample_analysis(data):
     """
-    Extract a sample of the data and send it to LLM for insights.
+    Extract a sample of the data and send it to LLM for insights and storytelling.
     """
     sample_data = data.sample(n=SAMPLE_SIZE).to_csv(index=False)
 
     prompt = f"""
-I have a sample dataset with the following rows:
+I have a dataset sample as follows:
 {sample_data}
 
-Can you provide insights, patterns, or interesting observations from this dataset?
-Please ensure your response is concise yet detailed.
+Please provide the following:
+1. Describe this dataset as a story (structure, purpose, and context).
+2. Summarize the analysis performed (e.g., correlation, visualization).
+3. Highlight the key insights discovered.
+4. Discuss the implications of these findings and what actions can be taken based on them.
 """
     return send_request_to_llm(prompt)
 
@@ -115,15 +117,6 @@ def write_readme(summary, charts, llm_insights, output_dir):
     return readme_path
 
 
-def push_to_github(output_dir):
-    """
-    Push results to a GitHub repository.
-    """
-    run(["git", "add", "."], cwd=output_dir)
-    run(["git", "commit", "-m", "Updated analysis results"], cwd=output_dir)
-    run(["git", "push"], cwd=output_dir)
-
-
 def main():
     # Parse command-line arguments
     parser = argparse.ArgumentParser(description="Analyze a CSV file and generate a report.")
@@ -146,17 +139,13 @@ def main():
     # Perform analysis
     summary, charts = perform_analysis(data, OUTPUT_DIR)
 
-    # Get LLM insights
-    print("Sending sample data to LLM for insights...")
+    # Get LLM storytelling insights
+    print("Sending sample data to LLM for insights and storytelling...")
     llm_insights = get_sample_analysis(data)
 
     # Write README
     print("Writing README...")
     readme_path = write_readme(summary, charts, llm_insights, OUTPUT_DIR)
-
-    # Push to GitHub
-    print("Pushing results to GitHub...")
-    push_to_github(OUTPUT_DIR)
 
     print(f"Analysis complete. Results saved to {readme_path}.")
 
