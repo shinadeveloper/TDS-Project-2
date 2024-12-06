@@ -1,67 +1,60 @@
 # Dataset Analysis Report
 
 ## Summary Statistics
-|                           |   count |   unique | top                                                                                      |   freq |            mean |              std |            min |             25% |              50% |             75% |              max |
-|:--------------------------|--------:|---------:|:-----------------------------------------------------------------------------------------|-------:|----------------:|-----------------:|---------------:|----------------:|-----------------:|----------------:|-----------------:|
-| book_id                   |   10000 |      nan | nan                                                                                      |    nan |  5000.5         |   2886.9         |     1          |  2500.75        |   5000.5         |  7500.25        |  10000           |
-| goodreads_book_id         |   10000 |      nan | nan                                                                                      |    nan |     5.2647e+06  |      7.57546e+06 |     1          | 46275.8         | 394966           |     9.38223e+06 |      3.32886e+07 |
-| best_book_id              |   10000 |      nan | nan                                                                                      |    nan |     5.47121e+06 |      7.82733e+06 |     1          | 47911.8         | 425124           |     9.63611e+06 |      3.55342e+07 |
-| work_id                   |   10000 |      nan | nan                                                                                      |    nan |     8.64618e+06 |      1.17511e+07 |    87          |     1.00884e+06 |      2.71952e+06 |     1.45177e+07 |      5.63996e+07 |
-| books_count               |   10000 |      nan | nan                                                                                      |    nan |    75.7127      |    170.471       |     1          |    23           |     40           |    67           |   3455           |
-| isbn                      |    9300 |     9300 | 439023483                                                                                |      1 |   nan           |    nan           |   nan          |   nan           |    nan           |   nan           |    nan           |
-| isbn13                    |    9415 |      nan | nan                                                                                      |    nan |     9.75504e+12 |      4.42862e+11 |     1.9517e+08 |     9.78032e+12 |      9.78045e+12 |     9.78083e+12 |      9.79001e+12 |
-| authors                   |   10000 |     4664 | Stephen King                                                                             |     60 |   nan           |    nan           |   nan          |   nan           |    nan           |   nan           |    nan           |
-| original_publication_year |    9979 |      nan | nan                                                                                      |    nan |  1981.99        |    152.577       | -1750          |  1990           |   2004           |  2011           |   2017           |
-| original_title            |    9415 |     9274 |                                                                                          |      5 |   nan           |    nan           |   nan          |   nan           |    nan           |   nan           |    nan           |
-| title                     |   10000 |     9964 | Selected Poems                                                                           |      4 |   nan           |    nan           |   nan          |   nan           |    nan           |   nan           |    nan           |
-| language_code             |    8916 |       25 | eng                                                                                      |   6341 |   nan           |    nan           |   nan          |   nan           |    nan           |   nan           |    nan           |
-| average_rating            |   10000 |      nan | nan                                                                                      |    nan |     4.00219     |      0.254427    |     2.47       |     3.85        |      4.02        |     4.18        |      4.82        |
-| ratings_count             |   10000 |      nan | nan                                                                                      |    nan | 54001.2         | 157370           |  2716          | 13568.8         |  21155.5         | 41053.5         |      4.78065e+06 |
-| work_ratings_count        |   10000 |      nan | nan                                                                                      |    nan | 59687.3         | 167804           |  5510          | 15438.8         |  23832.5         | 45915           |      4.94236e+06 |
-| work_text_reviews_count   |   10000 |      nan | nan                                                                                      |    nan |  2919.96        |   6124.38        |     3          |   694           |   1402           |  2744.25        | 155254           |
-| ratings_1                 |   10000 |      nan | nan                                                                                      |    nan |  1345.04        |   6635.63        |    11          |   196           |    391           |   885           | 456191           |
-| ratings_2                 |   10000 |      nan | nan                                                                                      |    nan |  3110.89        |   9717.12        |    30          |   656           |   1163           |  2353.25        | 436802           |
-| ratings_3                 |   10000 |      nan | nan                                                                                      |    nan | 11475.9         |  28546.4         |   323          |  3112           |   4894           |  9287           | 793319           |
-| ratings_4                 |   10000 |      nan | nan                                                                                      |    nan | 19965.7         |  51447.4         |   750          |  5405.75        |   8269.5         | 16023.5         |      1.4813e+06  |
-| ratings_5                 |   10000 |      nan | nan                                                                                      |    nan | 23789.8         |  79768.9         |   754          |  5334           |   8836           | 17304.5         |      3.01154e+06 |
-| image_url                 |   10000 |     6669 | https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png |   3332 |   nan           |    nan           |   nan          |   nan           |    nan           |   nan           |    nan           |
-| small_image_url           |   10000 |     6669 | https://s.gr-assets.com/assets/nophoto/book/50x75-a91bf249278a81aabab721ef782c4a74.png   |   3332 |   nan           |    nan           |   nan          |   nan           |    nan           |   nan           |    nan           |
+|        |   book_id |   goodreads_book_id |     best_book_id |         work_id |   books_count |           isbn |         isbn13 | authors      |   original_publication_year | original_title   | title          | language_code   |   average_rating |    ratings_count |   work_ratings_count |   work_text_reviews_count |   ratings_1 |   ratings_2 |   ratings_3 |      ratings_4 |       ratings_5 | image_url                                                                                | small_image_url                                                                        |
+|:-------|----------:|--------------------:|-----------------:|----------------:|--------------:|---------------:|---------------:|:-------------|----------------------------:|:-----------------|:---------------|:----------------|-----------------:|-----------------:|---------------------:|--------------------------:|------------:|------------:|------------:|---------------:|----------------:|:-----------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------|
+| count  |  10000    |     10000           |  10000           | 10000           |    10000      | 9300           | 9415           | 10000        |                    9979     | 9415             | 10000          | 8916            |     10000        |  10000           |      10000           |                  10000    |    10000    |    10000    |     10000   | 10000          | 10000           | 10000                                                                                    | 10000                                                                                  |
+| unique |    nan    |       nan           |    nan           |   nan           |      nan      | 9300           |  nan           | 4664         |                     nan     | 9274             | 9964           | 25              |       nan        |    nan           |        nan           |                    nan    |      nan    |      nan    |       nan   |   nan          |   nan           | 6669                                                                                     | 6669                                                                                   |
+| top    |    nan    |       nan           |    nan           |   nan           |      nan      |    4.39023e+08 |  nan           | Stephen King |                     nan     |                  | Selected Poems | eng             |       nan        |    nan           |        nan           |                    nan    |      nan    |      nan    |       nan   |   nan          |   nan           | https://s.gr-assets.com/assets/nophoto/book/111x148-bcc042a9c91a29c1d680899eff700a03.png | https://s.gr-assets.com/assets/nophoto/book/50x75-a91bf249278a81aabab721ef782c4a74.png |
+| freq   |    nan    |       nan           |    nan           |   nan           |      nan      |    1           |  nan           | 60           |                     nan     | 5                | 4              | 6341            |       nan        |    nan           |        nan           |                    nan    |      nan    |      nan    |       nan   |   nan          |   nan           | 3332                                                                                     | 3332                                                                                   |
+| mean   |   5000.5  |         5.2647e+06  |      5.47121e+06 |     8.64618e+06 |       75.7127 |  nan           |    9.75504e+12 | nan          |                    1981.99  | nan              | nan            | nan             |         4.00219  |  54001.2         |      59687.3         |                   2919.96 |     1345.04 |     3110.89 |     11475.9 | 19965.7        | 23789.8         | nan                                                                                      | nan                                                                                    |
+| std    |   2886.9  |         7.57546e+06 |      7.82733e+06 |     1.17511e+07 |      170.471  |  nan           |    4.42862e+11 | nan          |                     152.577 | nan              | nan            | nan             |         0.254427 | 157370           |     167804           |                   6124.38 |     6635.63 |     9717.12 |     28546.4 | 51447.4        | 79768.9         | nan                                                                                      | nan                                                                                    |
+| min    |      1    |         1           |      1           |    87           |        1      |  nan           |    1.9517e+08  | nan          |                   -1750     | nan              | nan            | nan             |         2.47     |   2716           |       5510           |                      3    |       11    |       30    |       323   |   750          |   754           | nan                                                                                      | nan                                                                                    |
+| 25%    |   2500.75 |     46275.8         |  47911.8         |     1.00884e+06 |       23      |  nan           |    9.78032e+12 | nan          |                    1990     | nan              | nan            | nan             |         3.85     |  13568.8         |      15438.8         |                    694    |      196    |      656    |      3112   |  5405.75       |  5334           | nan                                                                                      | nan                                                                                    |
+| 50%    |   5000.5  |    394966           | 425124           |     2.71952e+06 |       40      |  nan           |    9.78045e+12 | nan          |                    2004     | nan              | nan            | nan             |         4.02     |  21155.5         |      23832.5         |                   1402    |      391    |     1163    |      4894   |  8269.5        |  8836           | nan                                                                                      | nan                                                                                    |
+| 75%    |   7500.25 |         9.38223e+06 |      9.63611e+06 |     1.45177e+07 |       67      |  nan           |    9.78083e+12 | nan          |                    2011     | nan              | nan            | nan             |         4.18     |  41053.5         |      45915           |                   2744.25 |      885    |     2353.25 |      9287   | 16023.5        | 17304.5         | nan                                                                                      | nan                                                                                    |
+| max    |  10000    |         3.32886e+07 |      3.55342e+07 |     5.63996e+07 |     3455      |  nan           |    9.79001e+12 | nan          |                    2017     | nan              | nan            | nan             |         4.82     |      4.78065e+06 |          4.94236e+06 |                 155254    |   456191    |   436802    |    793319   |     1.4813e+06 |     3.01154e+06 | nan                                                                                      | nan                                                                                    |
 
 ## Insights from LLM
-Here are some insights and patterns observed from the provided dataset:
+Certainly! Here are some insights and observations derived from the provided book dataset:
 
-### General Overview
-1. **Diverse Genres**: The dataset includes a variety of books spanning multiple genres, from fiction to non-fiction, classics, and self-help.
-2. **Publication Years**: The dataset contains books published from the early 1900s (e.g., "As a Man Thinketh, 1902") to recent releases (e.g., "Armada, 2015"), indicating a broad temporal range.
+### 1. **Ratings and Popularity**
+   - The average rating of books ranges from approximately 3.34 (lowest) to 4.47 (highest). The overall average rating across the dataset appears to be quite high, indicating that most of these books are well-received.
+   - **High-Rated Titles**: A few notable high-rated books include "*Hamilton: The Revolution*" (4.47) and "*Llama Llama Mad at Mama*" (4.28), which have garnered significant popularity based on ratings count.
 
-### Ratings & Popularity
-1. **Average Rating Distribution**: Most books have an average rating between 3.5 and 4.5, which suggests a generally positive reception among readers. Notable high ratings (above 4.4) include:
-   - "The 7 Habits of Highly Effective Teens" (4.01)
-   - "And The Mountains Echoed" (4.03)
-   - "A Lesson Before Dying" (3.93)
-   - "Stand Tall, Molly Lou Melon" (4.39)
-2. **Ratings Count**: Books with high average ratings also tend to have a considerable ratings count, reflecting their popularity and readership (e.g., "The God Delusion" has 162740 ratings).
+### 2. **Publication Year Trends**
+   - The dataset contains a mix of older classics (e.g., Agatha Christie’s 1922 title) and recent publications (e.g., books from 2016). 
+   - Books from 2000s and 2010s appear to have higher ratings on average compared to earlier publications, which may indicate changing reader preferences or improved literary standards in recent years.
 
-### Author Recognition
-1. **Prominent Authors**: The presence of well-known authors such as Stephen King, Khaled Hosseini, and Julia Quinn highlights their popularity in the literary landscape.
-2. **Collaborative Works**: Some entries, like "Girls Night In," include multiple authors, indicating anthologies or collaborative writing efforts, which may attract diverse readership.
+### 3. **Author Popularity**
+   - Some authors are featured multiple times such as Agatha Christie and Dean Koontz, who have a broad range of works listed. Popular authors tend to have higher ratings and larger ratings counts.
+   - Notably, some titles with collaborative authors (e.g., "*Beautiful Chaos*" by Kami Garcia and Margaret Stohl) also receive substantial ratings and reviews.
 
-### Language and Localization
-1. **Language Codes**: The majority of the entries are in English (indicated by 'eng'), but there are titles with other identifiers, like 'en-GB' (British English) and 'en-US' (American English), pointing to different cultural adaptations or editions.
-2. **Multi-Cultural Relevance**: Some books either originate from non-English speaking authors or have titles that are translated, suggesting an international presence.
+### 4. **Genres and Language**
+   - While the dataset includes primarily English titles (with some in Spanish), this suggests a market focus on English-speaking demographics which could impact the diversity and reach of the books. 
+   - The diversity of genres cannot be determined directly from the data, but titles suggest a mix of fiction, non-fiction, fantasy, and mystery genres, indicating various reader interests.
 
-### Insights from Specific Books
-1. **High Text Reviews**: Titles with a significant work text reviews count (like "Tuesdays with Morrie" with 19272) indicate deeper engagement from readers, suggesting that the book resonated enough for people to express their thoughts extensively.
-2. **ISBN Information**: Missing ISBNs for some books may suggest they are self-published or digital exclusives, which can influence market reach and availability.
+### 5. **Ratings Distribution**
+   - The dataset includes detailed ratings breakdowns (from ratings 1 to 5). 
+   - Analyzing this could provide insights into reader satisfaction beyond the average rating. For instance, titles with a high count of 5-star ratings but low overall ratings might indicate polarized opinions.
 
-### Visual Representation Trends
-1. **Images Included**: Each entry has associated image URLs, implying strong visual marketing elements, which are crucial in attracting readers' attention in online platforms.
-2. **Consistent Aesthetic**: The varying image qualities imply an evolution in digital book marketing, and the presence of professional artwork suggests investment in branding.
+### 6. **Illustrative Titles and Cover Arts**
+   - Several titles in the dataset have compelling cover arts, particularly notable for attracting younger audiences or in the children's literature segment (e.g., little golden books).
+   - Books like "*Pippi in the South Seas*" (Pippi Långstrump i Söderhavet) show cultural impact, being translated and adapted into different languages and formats.
 
-### Conclusions
-Overall, this dataset showcases a rich collection of books that reflect reader preferences, trends in publishing, and engagement patterns. Such insights can help publishers, marketers, and authors understand market dynamics, improve outreach strategies, and refine their products to better match audience interests.
+### 7. **Image URLs**
+   - The presence of image URLs alongside books indicates that visual appeal might correlate with higher ratings, as readers often first judge a book by its cover.
+
+### 8. **Variability of Ratings Count**
+   - Notable variability in ratings count suggests that newer or more popular books receive significantly more attention. For example, books like "*Middlesex*" have exceptionally high ratings counts (over 500,000), while others struggle to reach even 10,000. This disparity highlights the competitive nature of the book market.
+
+### Conclusion
+This dataset provides a microcosm of the broader literature landscape, with valuable insights into reader preferences, publication trends, and author popularity. Further analyses could involve clustering books by rating patterns, publication year, or author trends to gain even deeper insights into consumer behavior and market dynamics.
 
 ## Visualizations
-![.\book_id_low_quality.png](.\book_id_low_quality.png)
-![.\goodreads_book_id_low_quality.png](.\goodreads_book_id_low_quality.png)
-![.\best_book_id_low_quality.png](.\best_book_id_low_quality.png)
+### correlation_heatmap.png
+![Visualization](correlation_heatmap.png)
+
+### scatterplot.png
+![Visualization](scatterplot.png)
+

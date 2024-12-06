@@ -1,5 +1,5 @@
 import os
-import pandas as pd
+import pandas as pd # type: ignore
 import matplotlib.pyplot as plt
 import seaborn as sns
 import requests
@@ -52,26 +52,25 @@ def send_request_to_llm(prompt):
     return response_data["choices"][0]["message"]["content"]
 
 
-def perform_analysis(data, output_dir):
+def write_readme(summary, charts, llm_insights, output_dir):
     """
-    Perform analysis on the dataset and generate low-detail visualizations.
+    Create a README.md file with analysis results, embedding charts as images.
     """
-    summary = data.describe(include="all").transpose()
+    readme_path = os.path.join(output_dir, "README.md")
+    with open(readme_path, "w", encoding="utf-8") as f:  # Ensure UTF-8 encoding
+        f.write("# Dataset Analysis Report\n\n")
+        f.write("## Summary Statistics\n")
+        f.write(summary.to_markdown() + "\n\n")
+        f.write("## Insights from LLM\n")
+        f.write(llm_insights + "\n\n")
+        f.write("## Visualizations\n")
+        for chart in charts:
+            image_name = os.path.basename(chart)
+            f.write(f"### {image_name}\n")
+            f.write(f"![Visualization]({image_name})\n\n")  # Embed image in markdown
 
-    # Generate visualizations
-    charts = []
-    for col in data.select_dtypes(include=["number"]).columns[:3]:  # Limit to 3 visualizations
-        plt.figure(figsize=IMAGE_SIZE)
-        sns.histplot(data[col], kde=True, color="skyblue", edgecolor="black")
-        chart_path = os.path.join(output_dir, f"{col}_low_quality.png")
-        plt.title(f"Distribution of {col}")
-        plt.xlabel(col)
-        plt.ylabel("Frequency")
-        plt.savefig(chart_path, dpi=DPI)
-        plt.close()
-        charts.append(chart_path)
+    return readme_path
 
-    return summary, charts
 
 
 def get_sample_analysis(data):
@@ -90,6 +89,56 @@ Please ensure your response is concise yet detailed.
     return send_request_to_llm(prompt)
 
 
+
+def perform_analysis(data, output_dir):
+    """
+    Perform data analysis including correlation analysis, regression, and visualizations.
+    Returns a summary dataframe and a list of generated chart file paths.
+    """
+    summary = data.describe(include="all")  # Summary statistics
+
+    # Select numeric columns for correlation analysis
+    numeric_data = data.select_dtypes(include=["number"])
+    correlations = numeric_data.corr()  # Correlation matrix
+
+    charts = []
+
+    # Save correlation heatmap
+    if not correlations.empty:
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(correlations, annot=True, fmt=".2f", cmap="coolwarm")
+        correlation_path = os.path.join(output_dir, "correlation_heatmap.png")
+        plt.savefig(correlation_path)
+        plt.close()
+        charts.append(correlation_path)
+
+    # Example scatterplot for first two numeric columns
+    numeric_cols = numeric_data.columns
+    if len(numeric_cols) >= 2:
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(x=data[numeric_cols[0]], y=data[numeric_cols[1]])
+        scatter_path = os.path.join(output_dir, "scatterplot.png")
+        plt.savefig(scatter_path)
+        plt.close()
+        charts.append(scatter_path)
+
+    return summary, charts
+
+
+    # Example scatterplot for first two numeric columns
+    numeric_cols = data.select_dtypes(include=["number"]).columns
+    if len(numeric_cols) >= 2:
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(x=data[numeric_cols[0]], y=data[numeric_cols[1]])
+        scatter_path = os.path.join(output_dir, "scatterplot.png")
+        plt.savefig(scatter_path)
+        plt.close()
+        charts.append(scatter_path)
+
+    return summary, charts
+
+
+
 def write_readme(summary, charts, llm_insights, output_dir):
     """
     Create a README.md file with analysis results.
@@ -103,7 +152,9 @@ def write_readme(summary, charts, llm_insights, output_dir):
         f.write(llm_insights + "\n\n")
         f.write("## Visualizations\n")
         for chart in charts:
-            f.write(f"![{chart}]({chart})\n")
+            image_name = os.path.basename(chart)
+            f.write(f"### {image_name}\n")
+            f.write(f"![Visualization]({image_name})\n\n")  # Embeds the image in markdown
 
     return readme_path
 
