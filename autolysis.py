@@ -1,12 +1,13 @@
 import os
-import pandas as pd # type: ignore
+import sys
+import argparse
+import pandas as pd  # type: ignore
 import matplotlib.pyplot as plt
 import seaborn as sns
 import requests
 import json
 from subprocess import run
-import sys
-import subprocess
+from tabulate import tabulate
 
 # Constants
 GPT4_MINI_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
@@ -16,16 +17,7 @@ SAMPLE_SIZE = 50  # Number of rows to send to LLM
 IMAGE_SIZE = (6, 6)  # For low-detail images
 DPI = 50  # Low DPI for cost-effective visuals
 
-# Ensure dependencies
-try:
-    from tabulate import tabulate
-except ImportError:
-    print("Installing 'tabulate' module...")
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "tabulate"])
-    from tabulate import tabulate
 
-
-# Functions
 def send_request_to_llm(prompt):
     """
     Sends a prompt to GPT-4 Mini using HTTP and returns the response.
@@ -52,27 +44,6 @@ def send_request_to_llm(prompt):
     return response_data["choices"][0]["message"]["content"]
 
 
-def write_readme(summary, charts, llm_insights, output_dir):
-    """
-    Create a README.md file with analysis results, embedding charts as images.
-    """
-    readme_path = os.path.join(output_dir, "README.md")
-    with open(readme_path, "w", encoding="utf-8") as f:  # Ensure UTF-8 encoding
-        f.write("# Dataset Analysis Report\n\n")
-        f.write("## Summary Statistics\n")
-        f.write(summary.to_markdown() + "\n\n")
-        f.write("## Insights from LLM\n")
-        f.write(llm_insights + "\n\n")
-        f.write("## Visualizations\n")
-        for chart in charts:
-            image_name = os.path.basename(chart)
-            f.write(f"### {image_name}\n")
-            f.write(f"![Visualization]({image_name})\n\n")  # Embed image in markdown
-
-    return readme_path
-
-
-
 def get_sample_analysis(data):
     """
     Extract a sample of the data and send it to LLM for insights.
@@ -87,7 +58,6 @@ Can you provide insights, patterns, or interesting observations from this datase
 Please ensure your response is concise yet detailed.
 """
     return send_request_to_llm(prompt)
-
 
 
 def perform_analysis(data, output_dir):
@@ -125,26 +95,12 @@ def perform_analysis(data, output_dir):
     return summary, charts
 
 
-    # Example scatterplot for first two numeric columns
-    numeric_cols = data.select_dtypes(include=["number"]).columns
-    if len(numeric_cols) >= 2:
-        plt.figure(figsize=(8, 6))
-        sns.scatterplot(x=data[numeric_cols[0]], y=data[numeric_cols[1]])
-        scatter_path = os.path.join(output_dir, "scatterplot.png")
-        plt.savefig(scatter_path)
-        plt.close()
-        charts.append(scatter_path)
-
-    return summary, charts
-
-
-
 def write_readme(summary, charts, llm_insights, output_dir):
     """
-    Create a README.md file with analysis results.
+    Create a README.md file with analysis results, embedding charts as images.
     """
     readme_path = os.path.join(output_dir, "README.md")
-    with open(readme_path, "w") as f:
+    with open(readme_path, "w", encoding="utf-8") as f:
         f.write("# Dataset Analysis Report\n\n")
         f.write("## Summary Statistics\n")
         f.write(summary.to_markdown() + "\n\n")
@@ -154,7 +110,7 @@ def write_readme(summary, charts, llm_insights, output_dir):
         for chart in charts:
             image_name = os.path.basename(chart)
             f.write(f"### {image_name}\n")
-            f.write(f"![Visualization]({image_name})\n\n")  # Embeds the image in markdown
+            f.write(f"![Visualization]({image_name})\n\n")  # Embed image in markdown
 
     return readme_path
 
@@ -168,16 +124,19 @@ def push_to_github(output_dir):
     run(["git", "push"], cwd=output_dir)
 
 
-# Main Function
 def main():
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description="Analyze a CSV file and generate a report.")
+    parser.add_argument("csv_file", help="Path to the CSV file to analyze")
+    args = parser.parse_args()
+
     # Ensure output directory exists
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     # Load dataset
-    data_path = "dataset.csv"  # Replace with your dataset file path
-    if not os.path.exists(data_path):
-        raise FileNotFoundError(f"{data_path} not found.")
-    data = pd.read_csv(data_path)
+    if not os.path.exists(args.csv_file):
+        raise FileNotFoundError(f"{args.csv_file} not found.")
+    data = pd.read_csv(args.csv_file)
 
     # Perform analysis
     summary, charts = perform_analysis(data, OUTPUT_DIR)
