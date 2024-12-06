@@ -12,7 +12,7 @@ This script is designed to analyze a CSV dataset and generate a detailed **READM
    - The script accepts the dataset file path as a command-line argument.
    - Usage:  
      ```bash
-     python autolysis.py dataset.csv
+     uv run autolysis.py dataset.csv
      ```
 
 2. **Data Analysis**:
@@ -121,7 +121,7 @@ This script is designed to analyze a CSV dataset and generate a detailed **READM
 2. Place your CSV file in the same directory or provide the full path.
 3. Run the script:
    ```bash
-   python autolysis.py dataset.csv
+   uv run autolysis.py dataset.csv
    ```
 4. Review the generated `README.md` and visualization files in the current directory.
 
