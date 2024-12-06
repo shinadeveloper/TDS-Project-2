@@ -1,3 +1,16 @@
+# /// script
+# requires-python = ">=3.11"
+# dependencies = [
+#   "requests",
+#   "argparse",
+#   "pandas",
+#   "matplotlib",
+#   "seaborn",
+#   "tabulate",
+# ]
+# ///
+
+
 import os
 import sys
 import argparse
@@ -10,7 +23,7 @@ from tabulate import tabulate  # type: ignore
 
 # Constants
 GPT4_MINI_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
-API_KEY = os.environ["AIPROXY_TOKEN"] # Replace with your API key
+API_KEY = os.environ["AIPROXY_TOKEN"] 
 OUTPUT_DIR = "."  # Current directory
 SAMPLE_SIZE = 50  # Number of rows to send to LLM
 IMAGE_SIZE = (6, 6)  # For low-detail images
