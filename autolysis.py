@@ -22,7 +22,7 @@ import json
 from tabulate import tabulate  # type: ignore
 
 # Constants
-GPT4_MINI_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
+GPT4o_MINI_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
 API_KEY = os.environ["AIPROXY_TOKEN"] 
 OUTPUT_DIR = "."  # Current directory
 SAMPLE_SIZE = 50  # Number of rows to send to LLM
@@ -32,7 +32,7 @@ DPI = 50  # Low DPI for cost-effective visuals
 
 def send_request_to_llm(prompt):
     """
-    Sends a prompt to GPT-4 Mini using HTTP and returns the response.
+    Sends a prompt to GPT-4o Mini using HTTP and returns the response.
     """
     headers = {
         "Authorization": f"Bearer {API_KEY}",
@@ -47,7 +47,7 @@ def send_request_to_llm(prompt):
         ],
     }
 
-    response = requests.post(GPT4_MINI_API_URL, headers=headers, data=json.dumps(payload))
+    response = requests.post(GPT4o_MINI_API_URL, headers=headers, data=json.dumps(payload))
 
     if response.status_code != 200:
         raise Exception(f"Error {response.status_code}: {response.text}")

@@ -2,7 +2,7 @@
 
 # Overview of `autolysis.py`
 
-This script is designed to analyze a CSV dataset and generate a detailed **README.md** report, including visualizations and insights. It uses **Python**, **Pandas**, **Seaborn**, and **GPT-4 Mini** for analysis and storytelling.
+This script is designed to analyze a CSV dataset and generate a detailed **README.md** report, including visualizations and insights. It uses **Python**, **Pandas**, **Seaborn**, and **GPT-4o Mini** for analysis and storytelling.
 
 ---
 
@@ -21,7 +21,7 @@ This script is designed to analyze a CSV dataset and generate a detailed **READM
    - **Scatterplot Visualization**: Plots the relationship between the first two numeric columns.
 
 3. **Insights from LLM**:
-   - Sends a sample of the dataset (50 rows) to the **GPT-4 Mini API** for storytelling:
+   - Sends a sample of the dataset (50 rows) to the **GPT-4o Mini API** for storytelling:
      - Describes the dataset as a story (structure, purpose, and context).
      - Summarizes the analysis performed.
      - Highlights key insights.
@@ -55,7 +55,7 @@ This script is designed to analyze a CSV dataset and generate a detailed **READM
 ## Key Functions
 
 ### 1. **`send_request_to_llm(prompt)`**
-   - Sends a prompt to GPT-4 Mini via HTTP and retrieves the response.
+   - Sends a prompt to GPT-4o Mini via HTTP and retrieves the response.
    - Utilizes the API key for authentication.
 
 ### 2. **`get_sample_analysis(data)`**
