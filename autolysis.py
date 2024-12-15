@@ -7,7 +7,6 @@
 #   "matplotlib",
 #   "seaborn",
 #   "tabulate",
-#   "scikit-learn",
 # ]
 # ///
 
@@ -21,17 +20,34 @@ import seaborn as sns  # type: ignore
 import requests  # type: ignore
 import json
 from tabulate import tabulate  # type: ignore
-from sklearn.linear_model import LinearRegression # type: ignore
-from sklearn.cluster import KMeans # type: ignore
 
 # Constants
 GPT4o_MINI_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
-API_KEY = os.environ["AIPROXY_TOKEN"]
+VISION_API_URL = "https://aiproxy.sanand.workers.dev/openai/v1/images"
+API_KEY = os.environ["AIPROXY_TOKEN"] 
 OUTPUT_DIR = "."  # Current directory
 SAMPLE_SIZE = 50  # Number of rows to send to LLM
 IMAGE_SIZE = (6, 6)  # For low-detail images
-DPI = 50  # Low DPI for cost-effective visuals
+DPI = 100  
 
+def analyze_image(image_path):
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json",
+    }
+
+    files = {
+        "file": open(image_path, "rb")
+    }
+
+    params = {
+        "detail": "low"
+    }
+
+    response = requests.post(VISION_API_URL, headers=headers, files=files, data=params)
+    if response.status_code != 200:
+        raise Exception(f"Error {response.status_code}: {response.text}")
+    return response.json()
 
 def send_request_to_llm(prompt):
     headers = {
@@ -53,8 +69,6 @@ def send_request_to_llm(prompt):
         raise Exception(f"Error {response.status_code}: {response.text}")
 
     response_data = response.json()
-    if 'monthlyCost' in response_data:
-        print(f"Monthly Cost: {response_data['monthlyCost']}")
     return response_data["choices"][0]["message"]["content"]
 
 
@@ -73,55 +87,9 @@ Please provide the following:
     return send_request_to_llm(prompt)
 
 
-def perform_regression(data, x_col, y_col, output_dir):
-    X = data[[x_col]].dropna()
-    y = data[y_col].dropna()
-    
-    if X.empty or y.empty:
-        return None
-
-    model = LinearRegression()
-    model.fit(X, y)
-    prediction = model.predict(X)
-
-    plt.figure(figsize=(8, 6))
-    sns.scatterplot(x=X[x_col], y=y)
-    plt.plot(X[x_col], prediction, color='red', label="Regression Line")
-    plt.title(f"Linear Regression: {x_col} vs {y_col}")
-    plt.xlabel(x_col)
-    plt.ylabel(y_col)
-    plt.legend()
-    plt.tight_layout()
-    regression_path = os.path.join(output_dir, "regression_plot.png")
-    plt.savefig(regression_path, bbox_inches='tight')
-    plt.close()
-
-    return regression_path
-
-
-def perform_clustering(data, n_clusters, output_dir):
-    numeric_data = data.select_dtypes(include=["number"]).dropna()
-    if numeric_data.empty:
-        return None
-
-    model = KMeans(n_clusters=n_clusters, n_init=10)
-    clusters = model.fit_predict(numeric_data)
-
-    plt.figure(figsize=(8, 6))
-    sns.scatterplot(x=numeric_data.iloc[:, 0], y=numeric_data.iloc[:, 1], hue=clusters, palette="viridis")
-    plt.title(f"KMeans Clustering (k={n_clusters})")
-    plt.xlabel(numeric_data.columns[0])
-    plt.ylabel(numeric_data.columns[1])
-    plt.tight_layout()
-    cluster_path = os.path.join(output_dir, "cluster_plot.png")
-    plt.savefig(cluster_path, bbox_inches='tight')
-    plt.close()
-
-    return cluster_path
-
-
 def perform_analysis(data, output_dir):
-    summary = data.describe(include="all")
+    summary = data.describe(include="all")  # Summary statistics
+
     numeric_data = data.select_dtypes(include=["number"])
     correlations = numeric_data.corr()
 
@@ -131,10 +99,13 @@ def perform_analysis(data, output_dir):
         plt.figure(figsize=(10, 8))
         sns.heatmap(correlations, annot=True, fmt=".2f", cmap="coolwarm")
         plt.title("Correlation Heatmap")
+        plt.xlabel("Features")
+        plt.ylabel("Features")
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, "correlation_heatmap.png"), bbox_inches='tight')
+        correlation_path = os.path.join(output_dir, "correlation_heatmap.png")
+        plt.savefig(correlation_path, dpi=DPI)
         plt.close()
-        charts.append("correlation_heatmap.png")
+        charts.append(correlation_path)
 
     numeric_cols = numeric_data.columns
     if len(numeric_cols) >= 2:
@@ -144,17 +115,10 @@ def perform_analysis(data, output_dir):
         plt.xlabel(numeric_cols[0])
         plt.ylabel(numeric_cols[1])
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, "scatterplot.png"), bbox_inches='tight')
+        scatter_path = os.path.join(output_dir, "scatterplot.png")
+        plt.savefig(scatter_path, dpi=DPI)
         plt.close()
-        charts.append("scatterplot.png")
-
-    regression_path = perform_regression(data, numeric_cols[0], numeric_cols[1], output_dir)
-    if regression_path:
-        charts.append("regression_plot.png")
-
-    cluster_path = perform_clustering(data, 3, output_dir)
-    if cluster_path:
-        charts.append("cluster_plot.png")
+        charts.append(scatter_path)
 
     return summary, charts
 
@@ -172,6 +136,7 @@ def write_readme(summary, charts, llm_insights, output_dir):
             image_name = os.path.basename(chart)
             f.write(f"### {image_name}\n")
             f.write(f"![Visualization]({image_name})\n\n")
+
     return readme_path
 
 
@@ -184,7 +149,7 @@ def main():
 
     if not os.path.exists(args.csv_file):
         raise FileNotFoundError(f"{args.csv_file} not found.")
-    
+
     try:
         data = pd.read_csv(args.csv_file, encoding="utf-8")
     except UnicodeDecodeError:
@@ -192,10 +157,12 @@ def main():
         data = pd.read_csv(args.csv_file, encoding="ISO-8859-1")
 
     summary, charts = perform_analysis(data, OUTPUT_DIR)
-    llm_insights = get_sample_analysis(data)
-    write_readme(summary, charts, llm_insights, OUTPUT_DIR)
 
-    print("Analysis complete.")
+    llm_insights = get_sample_analysis(data)
+    readme_path = write_readme(summary, charts, llm_insights, OUTPUT_DIR)
+
+    print(f"Analysis complete. Results saved to {readme_path}.")
+
 
 if __name__ == "__main__":
     main()
